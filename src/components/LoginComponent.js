@@ -240,13 +240,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
   },
   errorMessageStyle: {
-    fontSize: 12,
-    fontWeight: "bold",
+    fontSize: 13,
+    //fontWeight: "bold",
     color: "#FD2323"
   },
   inputTextStyle: {
     color: colors.BLACK,
-    fontSize: 13
+    fontSize: 14
   },
   verticalLineStyle: {
     height: 25,

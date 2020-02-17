@@ -22,7 +22,7 @@ export default {
     last_name_blank_error:'Please enter your last name.',
     mobile_no_placeholder:'Mobile Number',
     mobile_no_blank_error:'Please enter a valid mobile number.',
-    confrim_password_placeholder:'Confrim Password',
+    confrim_password_placeholder:'Confirm Password',
     confrim_password_not_match_err:'Password does not match',
     referral_id_placeholder:'Referral Id (Optional)',
     register_button:'Register Now',

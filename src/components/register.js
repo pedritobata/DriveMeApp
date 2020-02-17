@@ -4,7 +4,7 @@ import Background from './Background';
 import { Icon, Avatar,Button, Header, Input } from 'react-native-elements'
 import { colors } from '../common/theme';
 import * as firebase from 'firebase'; //Database
-var {  height } = Dimensions.get('window');
+var {  height, width } = Dimensions.get('window');
 import  languageJSON  from '../common/language';
 export default class Registration extends React.Component {
     
@@ -206,23 +206,25 @@ export default class Registration extends React.Component {
                 <Header 
                     backgroundColor={colors.TRANSPARENT}
                     leftComponent={{icon:'ios-arrow-back', type:'ionicon', color:colors.WHITE, size: 35, component: TouchableWithoutFeedback,onPress: onPressBack }}
+                    centerComponent={{text: languageJSON.registration_title, style:styles.headerStyle}}
                     containerStyle={styles.headerContainerStyle}  
                     innerContainerStyles={styles.headerInnerContainer}
                 />
                 <ScrollView style={styles.scrollViewStyle}>
                     <View style={styles.logo}>
-                        <Image source={require('../../assets/images/logo.png')} />
+                        <Image source={require('../../assets/images/logo.png')} 
+                        style={{width: width/2.8, height: width/2.8, resizeMode:'contain'}}/>
                     </View>
                     <KeyboardAvoidingView behavior={Platform.OS=='ios'?"padding":"padding"} style={styles.form}> 
                         <View style={styles.containerStyle}>
-                            <Text style={styles.headerStyle}>{languageJSON.registration_title}</Text>
+                           {/*  <Text style={styles.headerStyle}>{languageJSON.registration_title}</Text> */}
 
                             <View style={styles.textInputContainerStyle}> 
                                 <Icon
-                                    name='user'
-                                    type='font-awesome'
+                                    name='person'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
-                                    size={30}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
                                 <Input
@@ -247,10 +249,10 @@ export default class Registration extends React.Component {
 
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
-                                    name='user'
-                                    type='font-awesome'
+                                    name='person'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
-                                    size={30}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
                                 <Input
@@ -275,8 +277,8 @@ export default class Registration extends React.Component {
 
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
-                                    name='envelope-o'
-                                    type='font-awesome'
+                                    name='email'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
                                     size={23}
                                     containerStyle={styles.iconContainer}
@@ -302,10 +304,10 @@ export default class Registration extends React.Component {
                             </View>
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
-                                    name='mobile-phone'
-                                    type='font-awesome'
+                                    name='smartphone'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
-                                    size={40}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
                                 <Input
@@ -331,9 +333,9 @@ export default class Registration extends React.Component {
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
                                     name='lock'
-                                    type='font-awesome'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
-                                    size={30}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
                                 <Input
@@ -358,9 +360,9 @@ export default class Registration extends React.Component {
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
                                     name='lock'
-                                    type='font-awesome'
+                                    //type='font-awesome'
                                     color={colors.WHITE}
-                                    size={30}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
                                 <Input
@@ -384,9 +386,9 @@ export default class Registration extends React.Component {
                             <View style={styles.textInputContainerStyle}>
                                 <Icon
                                     name='lock'
-                                    type='font-awesome'
+                                   // type='font-awesome'
                                     color={colors.WHITE}
-                                    size={30}
+                                    size={23}
                                     containerStyle={styles.iconContainer}
                                 />
 
@@ -430,6 +432,8 @@ export default class Registration extends React.Component {
 
 const styles={
     headerContainerStyle: { 
+        justifyContent: 'center',
+        alignItems: 'center',
         backgroundColor: colors.TRANSPARENT, 
         borderBottomWidth: 0 ,
         marginTop:0
@@ -449,7 +453,7 @@ const styles={
         paddingTop:8
     },
     gapView: {
-        height:40,
+        height:60,
         width:'100%'
     },
     buttonContainer: { 
@@ -470,8 +474,8 @@ const styles={
         fontSize:16 
     },
     inputTextStyle: {
-        color:colors.WHITE,
-        fontSize:13,
+        color:colors.GREY.Smoke_Grey,
+        fontSize:17,
         marginLeft:0,
         height:32,
     },
@@ -488,8 +492,8 @@ const styles={
         flex: 1,
     },
     logo:{
-        width:'90%',
-        justifyContent:"flex-start",
+        flex: 0.3,
+        justifyContent:"center",
         marginTop:10,
         alignItems:'center', 
     },
@@ -499,12 +503,13 @@ const styles={
     textInputContainerStyle:{
         flexDirection:'row', 
         alignItems: "center",  
-        marginLeft:20,
-        marginRight:20,
-        padding: 15,
+        justifyContent: "center",
+        marginLeft:3,
+       // marginRight:20,
+        padding: 20,
     },
     headerStyle:{
-        fontSize:18,
+        fontSize:20,
         color:colors.WHITE,
         textAlign:'center',
         flexDirection:'row',

@@ -34,7 +34,6 @@ export default class LoginScreen extends Component {
   //go to register page
   onPressRegister() {
     this.props.navigation.navigate("Reg");
-    // console.log("register clicked");
   }
 
   //forgot password press
@@ -183,14 +182,14 @@ const styles = StyleSheet.create({
   logInCompStyl: {
     height: 135
   },
-  facebookButtonStyle: {
+ /*  facebookButtonStyle: {
     flex: 0.2,
     alignItems: "center"
-  },
-  fbButtonTitleStyle: {
+  }, */
+  /* fbButtonTitleStyle: {
     fontSize: 16
-  },
-  fbLoginButtonStyle: {
+  }, */
+ /*  fbLoginButtonStyle: {
     backgroundColor: colors.SKY,
     height: 60,
     width: 180,
@@ -203,5 +202,5 @@ const styles = StyleSheet.create({
     shadowRadius: 10,
     shadowOpacity: 0.6,
     shadowOffset: { width: 0, height: 4 }
-  }
+  } */
 });
