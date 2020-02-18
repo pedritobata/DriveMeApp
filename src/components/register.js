@@ -193,13 +193,13 @@ export default class Registration extends React.Component {
                 </View>
                 </View>
             </View>
-            </Modal>
+        </Modal>
      )
     }
 
     render(){
 
-        const { onPressBack,registrationData,reqData, loading }=this.props
+        const { onPressBack,registrationData,reqData, loading } = this.props
 
         return(
             <Background>

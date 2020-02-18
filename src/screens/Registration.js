@@ -5,13 +5,14 @@ import * as firebase from 'firebase'
 import  languageJSON  from '../common/language';
 
 export default class RegistrationPage extends React.Component {
-  login;
+  //login;
     constructor(props){
         super(props);
         this.state = {
           loading: false,
           allRegData:""
         }
+        
         this.login = false;
         //firebase.auth().signOut();
     }
