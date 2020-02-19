@@ -58,7 +58,7 @@ export default class ForgotPassModal extends Component {
                                 <Text style={styles.forgotPassText}>{languageJSON.forgot_password_link}</Text>
                             </View>
                             <View style={styles.crossIconContainer}>
-                                <Icon name='close' type="fontawesome"color='#fff' onPress={requestmodalclose} />
+                                <Icon name='close' type="fontawesome" color='#fff' onPress={requestmodalclose} />
                             </View>
                         </View>
                     </View>

@@ -82,7 +82,7 @@ export default class MapScreen extends React.Component {
         }
     })
  }
-  async componentWillMount() {  
+  async componentDidMount() {  
     if (Platform.OS === 'android' && !Constants.default.isDevice) {
         this.setState({
           errorMessage: 'Oops, this will not work on Sketch in an Android emulator. Try it on your device!',

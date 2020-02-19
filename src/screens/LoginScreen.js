@@ -62,8 +62,11 @@ export default class LoginScreen extends Component {
   async onPressLogin(email, password) {
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
-      .then(res => {})
+      //.signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword("pedromartinez_goyo@hotmail.com", "123456")
+      .then(res => {
+        console.log('*****Login succedd!!');
+      })
       .catch(res => {
         alert(res.message);
       });

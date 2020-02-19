@@ -24,9 +24,9 @@ export default class LoginComponent extends Component {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const emailValid = re.test(email);
     LayoutAnimation.easeInEaseOut();
-    this.setState({ emailValid });
+    this.setState({ emailValid: true });
     emailValid || this.emailInput.shake();
-    return emailValid;
+    return true; //emailValid;
   }
 
   //validation for password
@@ -46,9 +46,9 @@ export default class LoginComponent extends Component {
       this.setState({ pwdErrorMsg: languageJSON.password_complexity_check });
     }
     LayoutAnimation.easeInEaseOut();
-    this.setState({ passwordValid });
+    this.setState({ passwordValid: true });
     passwordValid || this.passwordInput.shake();
-    return passwordValid;
+    return true; //passwordValid;
   }
 
   //login press for validation check
