@@ -182,13 +182,16 @@ export default class MapScreen extends React.Component {
                 latitude:  location.coords.latitude,
                 longitude: location.coords.longitude,
               };
-              var curuser = firebase.auth().currentUser.uid;
+
+              
+              var currUser = firebase.auth().currentUser.uid;
             
              if(pos){
-              let latlng = pos.latitude + ','+pos.longitude;
-              return fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng='+latlng+'&key=' + google_map_key)
+              let latlng = pos.latitude + ',' + pos.longitude;
+              return fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + latlng + '&key=' + google_map_key)
               .then((response) => response.json())
               .then((responseJson) => {
+                  //console.log("****respuesta:", responseJson);
               if(this.passData.wherelatitude == 0){
                 this.setState({
                     whereText: responseJson.results[0].formatted_address,
@@ -204,7 +207,7 @@ export default class MapScreen extends React.Component {
                     this.passData.wherelatitude = pos.latitude
                     this.passData.wherelongitude = pos.longitude
                     this.passData.whereText = responseJson.results[0].formatted_address;
-                    firebase.database().ref('users/' + curuser+'/location').update({ 
+                    firebase.database().ref('users/' + currUser + '/location').update({ 
                         add:responseJson.results[0].formatted_address,
                         lat:pos.latitude,
                         lng:pos.longitude
@@ -217,7 +220,7 @@ export default class MapScreen extends React.Component {
                     this.passData.wherelatitude = pos.latitude
                     this.passData.wherelongitude = pos.longitude
                     this.passData.whereText = responseJson.results[0].formatted_address;
-                    firebase.database().ref('users/' + curuser+'/location').update({ 
+                    firebase.database().ref('users/' + currUser + '/location').update({ 
                         add:responseJson.results[0].formatted_address,
                         lat:pos.latitude,
                         lng:pos.longitude
