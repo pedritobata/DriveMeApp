@@ -1,5 +1,7 @@
 import React from "react";
-import { StyleSheet, ImageBackground } from "react-native";
+import { StyleSheet, ImageBackground, View } from "react-native";
+//import { colors } from "react-native-elements";
+import { colors } from "../common/theme";
 
 export default class Background extends React.Component {
   render() {
@@ -7,9 +9,13 @@ export default class Background extends React.Component {
       <ImageBackground
         style={styles.imgBackground}
         resizeMode="cover"
-        source={require("../../assets/images/background.png")}
+        source={
+          !this.props.noBackImage
+            ? require("../../assets/images/back-image.jpg")
+            : null
+        }
       >
-        {this.props.children}
+        <View style={!this.props.noBackImage ? styles.container: null}>{this.props.children}</View>
       </ImageBackground>
     );
   }
@@ -18,7 +24,10 @@ export default class Background extends React.Component {
 const styles = StyleSheet.create({
   imgBackground: {
     width: "100%",
-    height: "100%",
-    flex: 1
+    height: "100%"
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'rgba(0,0,0, 0.6)'
   }
 });

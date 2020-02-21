@@ -122,7 +122,7 @@ export default class LoginScreen extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
         <Background>
           <View style={styles.logo}>
-            <Image source={require("../../assets/images/logo.png")} />
+            <Image source={require("../../assets/images/logo3.png")} style={styles.imgLogo}/>
           </View>
           <View style={styles.logInCompStyl} />
           <View style={styles.containerView}>
@@ -175,12 +175,16 @@ export default class LoginScreen extends Component {
 const styles = StyleSheet.create({
   containerView: { flex: 1, justifyContent: "center", alignItems: "center" },
   logo: {
-    flex: 1,
-    position: "absolute",
+    flex: 0.2,
+    //position: "absolute",
     top: 80,
-    width: "100%",
-    justifyContent: "flex-end",
+    justifyContent: "flex-start",
     alignItems: "center"
+  },
+  imgLogo: {
+    width: 130,
+    height: 100,
+    resizeMode: 'cover'
   },
   logInCompStyl: {
     height: 135

@@ -202,7 +202,7 @@ export default class Registration extends React.Component {
         const { onPressBack,registrationData,reqData, loading } = this.props
 
         return(
-            <Background>
+            <Background noBackImage={true}>
                 <Header 
                     backgroundColor={colors.TRANSPARENT}
                     leftComponent={{icon:'ios-arrow-back', type:'ionicon', color:colors.WHITE, size: 35, component: TouchableWithoutFeedback,onPress: onPressBack }}
@@ -223,7 +223,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='person'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -232,7 +232,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.first_name_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.fname}
                                     keyboardType={'email-address'}
                                     inputStyle={styles.inputTextStyle}
@@ -251,7 +251,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='person'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -260,7 +260,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.last_name_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.lname}
                                     keyboardType={'email-address'}
                                     inputStyle={styles.inputTextStyle}
@@ -279,7 +279,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='email'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -288,7 +288,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.email_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.email}
                                     keyboardType={'email-address'}
                                     inputStyle={styles.inputTextStyle}
@@ -306,7 +306,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='smartphone'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -315,7 +315,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.mobile_no_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.mobile}
                                     keyboardType={'number-pad'}
                                     inputStyle={styles.inputTextStyle}
@@ -334,7 +334,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='lock'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -343,7 +343,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.password_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.password}
                                     inputStyle={styles.inputTextStyle}
                                     onChangeText={(text)=>{this.setState({password: text})}}
@@ -361,7 +361,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='lock'
                                     //type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -370,7 +370,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.confrim_password_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.confPassword}
                                     inputStyle={styles.inputTextStyle}
                                     onChangeText={(text)=>{this.setState({confPassword: text})}}
@@ -387,7 +387,7 @@ export default class Registration extends React.Component {
                                 <Icon
                                     name='lock'
                                    // type='font-awesome'
-                                    color={colors.WHITE}
+                                    color={colors.BLACK}
                                     size={23}
                                     containerStyle={styles.iconContainer}
                                 />
@@ -397,7 +397,7 @@ export default class Registration extends React.Component {
                                     editable={true}
                                     underlineColorAndroid={colors.TRANSPARENT}
                                     placeholder={languageJSON.referral_id_placeholder}
-                                    placeholderTextColor={colors.WHITE}
+                                    //placeholderTextColor={styles.placeHolderColor}
                                     value={this.state.refferalId}
                                     // keyboardType={'email-address'}
                                     inputStyle={styles.inputTextStyle}
@@ -431,20 +431,29 @@ export default class Registration extends React.Component {
 };
 
 const styles={
+    headerStyle:{
+        fontSize:20,
+        color:colors.WHITE,
+        textAlign:'center',
+        flexDirection:'row',
+        marginTop:0
+    },
     headerContainerStyle: { 
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.TRANSPARENT, 
+        backgroundColor: colors.GREY.default, 
         borderBottomWidth: 0 ,
-        marginTop:0
+        marginTop:0,
+        paddingBottom: 10
     },
+    placeHolderColor: colors.GREY.default,
     headerInnerContainer: {
         marginLeft:10, 
-        marginRight: 10
+        marginRight: 10,
     },
     inputContainerStyle: {
         borderBottomWidth:1,
-        borderBottomColor: colors.WHITE
+        borderBottomColor: colors.BLUE.sky
     },
     textInputStyle:{
         marginLeft:10,
@@ -508,11 +517,5 @@ const styles={
        // marginRight:20,
         padding: 20,
     },
-    headerStyle:{
-        fontSize:20,
-        color:colors.WHITE,
-        textAlign:'center',
-        flexDirection:'row',
-        marginTop:0
-    },
+    
 }

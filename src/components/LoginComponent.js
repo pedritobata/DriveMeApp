@@ -131,7 +131,7 @@ export default class LoginComponent extends Component {
             buttonStyle={styles.buttonStyle}
             containerStyle={{ flex: 1 }}
           />
-          <View style={styles.verticalLineStyle} />
+          {/* <View style={styles.verticalLineStyle} /> */}
           <Button
             clear
             title={languageJSON.forgot_password_link}
@@ -184,7 +184,8 @@ const styles = StyleSheet.create({
   buttonContainer: {
     flex: 0.2,
     flexDirection: "row",
-    marginRight: 15
+    marginRight: 15,
+    justifyContent: 'space-between'
   },
   loginButtonContainer: {
     //flex: 1,
