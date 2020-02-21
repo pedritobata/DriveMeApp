@@ -60,7 +60,7 @@ export default class LoginScreen extends Component {
 
   //on press login after all validation
   async onPressLogin(email, password) {
-    firebase
+    return firebase
       .auth()
       //.signInWithEmailAndPassword(email, password)
       .signInWithEmailAndPassword("pedromartinez_goyo@hotmail.com", "123456")
@@ -122,10 +122,10 @@ export default class LoginScreen extends Component {
       <TouchableWithoutFeedback onPress={Keyboard.dismiss()}>
         <Background>
           <View style={styles.logo}>
-            <Image source={require("../../assets/images/logo3.png")} style={styles.imgLogo}/>
+            <Image source={require("../../assets/images/logo.png")} style={styles.imgLogo}/>
           </View>
           <View style={styles.logInCompStyl} />
-          <View style={styles.containerView}>
+          <View style={styles.containerLoginView}>
             <LoginComponent
               complexity={"any"}
               onPressRegister={() => {
@@ -173,22 +173,23 @@ export default class LoginScreen extends Component {
 
 //Screen Styling
 const styles = StyleSheet.create({
-  containerView: { flex: 1, justifyContent: "center", alignItems: "center" },
   logo: {
     flex: 0.2,
     //position: "absolute",
-    top: 80,
-    justifyContent: "flex-start",
+    top: 70,
+    justifyContent: "center",
     alignItems: "center"
-  },
-  imgLogo: {
-    width: 130,
-    height: 100,
-    resizeMode: 'cover'
   },
   logInCompStyl: {
     height: 135
   },
+  containerLoginView: { flex: 1, justifyContent: "center", alignItems: "center" },
+  imgLogo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain'
+  },
+ 
  /*  facebookButtonStyle: {
     flex: 0.2,
     alignItems: "center"

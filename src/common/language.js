@@ -1,5 +1,5 @@
 export default {
-    email_placeholder :"Email",
+    email_placeholder :"email@address.com",
     password_placeholder:"Password",
     login_button:"Login",
     register_link:"Register",
@@ -16,9 +16,9 @@ export default {
     refferal_code_validation_modal:'Validating your Referral Code...',
     refferal_id_not_match_error:'This is not a valid referral id.',
     registration_title:'Registration',
-    first_name_placeholder:'First Name',
+    first_name_placeholder:'Your First Name',
     first_name_blank_error:"Please enter your first name.",
-    last_name_placeholder:'Last Name',
+    last_name_placeholder:'Your Last Name',
     last_name_blank_error:'Please enter your last name.',
     mobile_no_placeholder:'Mobile Number',
     mobile_no_blank_error:'Please enter a valid mobile number.',

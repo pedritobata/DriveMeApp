@@ -132,12 +132,12 @@ export default class SideMenu extends React.Component{
                             </TouchableOpacity>
                     } />
                 </View>
-                <View style={{opacity: 0.6}}>
+               {/*  <View style={{opacity: 0.6}}>
                     <Image 
                         source={require('../../assets/images/logo.png')} 
                         style={{width: '100%'}}
                     />
-                </View>
+                </View> */}
                
             </View>
         )

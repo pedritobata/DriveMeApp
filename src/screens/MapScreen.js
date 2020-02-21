@@ -111,10 +111,10 @@ export default class MapScreen extends React.Component {
                   })
                   this.passData = this.props.navigation.getParam('old');
                   this.setState({
-                    carType:this.passData.carType
-                },()=>{this.showDriver();
-                })
-                }
+                        carType:this.passData.carType
+                    },()=>{this.showDriver();
+                    })
+                    }
           }else {
             if(searchObj.searchDetails){
                 this.setState({
@@ -203,7 +203,7 @@ export default class MapScreen extends React.Component {
                     }
                 },()=>{
                     this.forceUpdate();
-                    this.showDriver();
+                    //this.showDriver();
                     this.passData.wherelatitude = pos.latitude
                     this.passData.wherelongitude = pos.longitude
                     this.passData.whereText = responseJson.results[0].formatted_address;
@@ -216,7 +216,7 @@ export default class MapScreen extends React.Component {
                 
                 }else{
                     this.forceUpdate();
-                    this.showDriver();
+                    //this.showDriver();
                     this.passData.wherelatitude = pos.latitude
                     this.passData.wherelongitude = pos.longitude
                     this.passData.whereText = responseJson.results[0].formatted_address;

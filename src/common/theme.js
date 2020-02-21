@@ -28,6 +28,7 @@ export const colors = {
     iconSecondary: "#3d3d3d",
     background: "rgba(22,22,22,0.8)",
     Smoke_Grey:"#dcdcdc",
+    light_Grey: "rgba(255, 255, 255, .4)",
     Trolley_Grey:"#808080",
     border:"#d6d6d6",
     Deep_Nobel:"#9f9f9f",

@@ -185,7 +185,7 @@ import SideMenu from '../components/SideMenu';
     export const RootNavigator = createDrawerNavigator(
         DrawerRoutes,
         {
-        drawerWidth: 180,
+        drawerWidth: 200,
         initialRouteName:'Map',
         contentComponent: SideMenu,
       });

@@ -14,7 +14,8 @@ export default class LoginComponent extends Component {
       password: "",
       emailValid: true,
       passwordValid: true,
-      pwdErrorMsg: ""
+      pwdErrorMsg: "",
+      loadingButton: false
     };
   }
 
@@ -52,7 +53,7 @@ export default class LoginComponent extends Component {
   }
 
   //login press for validation check
-  onPressLogin() {
+  async onPressLogin() {
     const { onPressLogin } = this.props;
     LayoutAnimation.easeInEaseOut();
     const emailValid = this.validateEmail();
@@ -60,7 +61,8 @@ export default class LoginComponent extends Component {
 
     if (emailValid && passwordValid) {
       //login function of smart component
-      onPressLogin(this.state.email, this.state.password);
+      await onPressLogin(this.state.email, this.state.password);
+      this.setState({loadingButton: true});
       this.setState({ email: "", password: "" });
     }
   }
@@ -72,6 +74,8 @@ export default class LoginComponent extends Component {
       <View style={styles.mainContainer}>
         <View style={styles.inputContainer}>
           <Input
+            label="Email"
+            labelStyle={styles.labelInput}
             ref={input => (this.emailInput = input)}
             editable={true}
             underlineColorAndroid={colors.TRANSPARENT}
@@ -97,6 +101,8 @@ export default class LoginComponent extends Component {
             containerStyle={styles.emailInputContainer}
           />
           <Input
+            label="Password"
+            labelStyle={styles.labelInput}
             ref={input => (this.passwordInput = input)}
             editable={true}
             blurOnSubmit={true}
@@ -116,8 +122,8 @@ export default class LoginComponent extends Component {
               this.validatePassword();
             }}
             errorStyle={styles.errorMessageStyle}
-            inputContainerStyle={styles.pwdInputContainerStyle}
-            containerStyle={styles.pwdInputContainer}
+            inputContainerStyle={styles.emailInputContainerStyle}
+            containerStyle={styles.emailInputContainer}
           />
         </View>
         <View style={styles.buttonContainer}>
@@ -126,10 +132,10 @@ export default class LoginComponent extends Component {
             title={languageJSON.register_link}
             loading={false}
             loadingProps={{ size: "large", color: colors.BLUE.default.primary }}
-            titleStyle={styles.forgotTitleStyle}
+            titleStyle={{...styles.forgotTitleStyle, textAlign: 'left'}}
             onPress={onPressRegister}
             buttonStyle={styles.buttonStyle}
-            containerStyle={{ flex: 1 }}
+            containerStyle={{ flex: 0.5}}
           />
           {/* <View style={styles.verticalLineStyle} /> */}
           <Button
@@ -138,16 +144,17 @@ export default class LoginComponent extends Component {
             loading={false}
             onPress={onPressForgotPassword}
             loadingProps={{ size: "large", color: colors.BLUE.default.primary }}
-            titleStyle={styles.forgotTitleStyle}
+            titleStyle={{...styles.forgotTitleStyle, textAlign: 'right'}}
             titleProps={{ numberOfLines: 2, ellipsizeMode: "tail" }}
             buttonStyle={styles.buttonStyle}
-            containerStyle={{ flex: 1 }}
+            containerStyle={{ flex: 1}}
           />
         </View>
         <View style={styles.loginButton}>
           <Button
             title={languageJSON.login_button}
-            loading={false}
+            loading={this.state.loadingButton}
+            loadingStyle={{ width: "100%", paddingTop:10}}
             loadingProps={{ size: "large", color: colors.BLUE.default.primary }}
             titleStyle={styles.buttonTitleStyle}
             onPress={() => {
@@ -166,26 +173,27 @@ const styles = StyleSheet.create({
   mainContainer: {
       flex: 1,
       justifyContent: 'center',
-      alignItems: 'center'
+      alignItems: 'stretch'
   },
   inputContainer: {
     flex: 0.5,
-    width: "100%",
-    alignItems: "center",
+    //alignItems: "stretch",
     elevation: 20,
-    justifyContent: "flex-end",
-    shadowColor: colors.BLACK,
+    justifyContent: "center",
+    //backgroundColor: colors.WHITE,
+    //width: 100,
+   /*  shadowColor: colors.BLACK,
     shadowRadius: 10,
     shadowOpacity: 0.6,
-    shadowOffset: { width: 0, height: 4 },
-    marginBottom: 10,
+    shadowOffset: { width: 0, height: 4 }, */
+   // marginBottom: 10,
     //padding: 30
   },
   buttonContainer: {
     flex: 0.2,
     flexDirection: "row",
-    marginRight: 15,
-    justifyContent: 'space-between'
+    //marginRight: 15,
+    //justifyContent: 'space-around'
   },
   loginButtonContainer: {
     //flex: 1,
@@ -203,46 +211,66 @@ const styles = StyleSheet.create({
   },
   loginButton: {
     flex: 0.2,
-    width: "70%"
+    width: "80%"
   },
   buttonStyle: {
     backgroundColor: colors.BLUE.default.secondary,
     height: 45
   },
+  labelInput: {
+    position: "absolute", 
+    top: -8, left: 20, 
+    zIndex: 10, 
+    backgroundColor: 'rgba(0,0,0, .75)',
+    shadowColor: colors.BLACK,
+    shadowOffset: { width: 3, height: 4 },
+    shadowOpacity: 0.6,
+    fontSize: 14,
+    color: colors.WHITE,
+    paddingHorizontal: 5
+  },
   emailInputContainer: {
-    borderTopRightRadius: 10,
+   /*  borderTopRightRadius: 10,
     borderTopLeftRadius: 10,
     paddingLeft: 15,
     backgroundColor: colors.WHITE,
     paddingRight: 15,
-    paddingTop: 10,
-    width: width - 60
+    paddingTop: 10, */
+    //width: "100%"
+
+    marginVertical: 10,
+    flex: 0.5,
+
   },
-  pwdInputContainer: {
-    borderBottomRightRadius: 10,
+  //pwdInputContainer: {
+   /*  borderBottomRightRadius: 10,
     borderBottomLeftRadius: 10,
     paddingLeft: 15,
     backgroundColor: colors.WHITE,
     paddingRight: 15,
     paddingTop: 5,
     paddingBottom: 40,
-    borderBottomColor: colors.BLACK,
+    borderBottomColor: colors.BLACK, */
     //borderBottomWidth: 0,
-    width: width - 60
-  },
+    //width: "100%"
+ // },
   emailInputContainerStyle: {
-    borderBottomColor: colors.SKY,
+   /*  borderBottomColor: colors.SKY,
     borderBottomWidth: 1,
-    paddingBottom: 15
+    paddingBottom: 15 */
+    borderWidth: 2,
+    borderColor: colors.WHITE,
+    padding: 7,
+    borderRadius: 5
   },
-  pwdInputContainerStyle: {
+ /*  pwdInputContainerStyle: {
     paddingBottom: 15,
     borderBottomColor: colors.SKY,
     borderBottomWidth: 1,
-  },
+    borderWidth: 1,
+  }, */
   errorMessageStyle: {
     fontSize: 13,
-    //fontWeight: "bold",
     color: "#FD2323"
   },
   inputTextStyle: {
@@ -262,7 +290,7 @@ const styles = StyleSheet.create({
   forgotTitleStyle: {
     fontWeight: "700",
     fontSize: 12,
-    width: "100%"
+    width: "100%",
   },
   buttonContainerStyle: {
     flex: 1
