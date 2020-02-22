@@ -5,7 +5,8 @@ import {
   Image,
   Alert,
   TouchableWithoutFeedback,
-  Keyboard
+  Keyboard,
+  Dimensions
 } from "react-native";
 import { LoginComponent, Background, ForgotPassModal } from "../components";
 import { colors } from "../common/theme";
@@ -13,6 +14,8 @@ import * as firebase from "firebase";
 import * as Facebook from "expo-facebook";
 import { Button } from "react-native-elements";
 import languageJSON from "../common/language";
+
+const { width, height } = Dimensions.get("window");
 
 export default class LoginScreen extends Component {
   constructor(props) {
@@ -176,7 +179,7 @@ const styles = StyleSheet.create({
   logo: {
     flex: 0.2,
     //position: "absolute",
-    top: 70,
+    top: width / 3.5,
     justifyContent: "center",
     alignItems: "center"
   },
@@ -185,8 +188,8 @@ const styles = StyleSheet.create({
   },
   containerLoginView: { flex: 1, justifyContent: "center", alignItems: "center" },
   imgLogo: {
-    width: 200,
-    height: 200,
+    width: width / 1.5,
+    height: width / 1.5,
     resizeMode: 'contain'
   },
  

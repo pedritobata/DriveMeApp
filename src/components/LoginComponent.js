@@ -3,7 +3,7 @@ import { StyleSheet, View, Dimensions, LayoutAnimation } from "react-native";
 import { Input, Button } from "react-native-elements";
 import { colors } from "../common/theme";
 import { loginPage } from "../common/key";
-var { width } = Dimensions.get("window");
+const { width, height } = Dimensions.get("window");
 import languageJSON from "../common/language";
 
 export default class LoginComponent extends Component {
@@ -79,8 +79,8 @@ export default class LoginComponent extends Component {
             ref={input => (this.emailInput = input)}
             editable={true}
             underlineColorAndroid={colors.TRANSPARENT}
-            placeholder={languageJSON.email_placeholder}
-            placeholderTextColor={colors.Smoke_Grey}
+            //placeholder={languageJSON.email_placeholder}
+            //placeholderTextColor={colors.Smoke_Grey}
             value={this.state.email}
             keyboardType={"email-address"}
             inputStyle={styles.inputTextStyle}
@@ -107,8 +107,8 @@ export default class LoginComponent extends Component {
             editable={true}
             blurOnSubmit={true}
             underlineColorAndroid={colors.TRANSPARENT}
-            placeholder={languageJSON.password_placeholder}
-            placeholderTextColor={colors.Smoke_Grey}
+            //placeholder={languageJSON.password_placeholder}
+            //placeholderTextColor={colors.Smoke_Grey}
             value={this.state.password}
             inputStyle={styles.inputTextStyle}
             onChangeText={text => {
@@ -155,7 +155,7 @@ export default class LoginComponent extends Component {
             title={languageJSON.login_button}
             loading={this.state.loadingButton}
             loadingStyle={{ width: "100%", paddingTop:10}}
-            loadingProps={{ size: "large", color: colors.BLUE.default.primary }}
+            loadingProps={{ size: "large", color: colors.WHITE }}
             titleStyle={styles.buttonTitleStyle}
             onPress={() => {
               this.onPressLogin();
@@ -179,7 +179,7 @@ const styles = StyleSheet.create({
     flex: 0.5,
     //alignItems: "stretch",
     elevation: 20,
-    justifyContent: "center",
+    justifyContent: "space-around",
     //backgroundColor: colors.WHITE,
     //width: 100,
    /*  shadowColor: colors.BLACK,
@@ -201,11 +201,13 @@ const styles = StyleSheet.create({
     shadowColor: colors.BLACK,
     shadowRadius: 10,
     shadowOpacity: 0.6,
-    shadowOffset: { width: 0, height: 4 }
+    shadowOffset: { width: 0, height: 4 },
+    marginBottom: 6,
+    paddingHorizontal: 5
   },
   loginButtonStyle: {
     backgroundColor: colors.SKY,
-    height: 45,
+    height: height / 13,
     borderRadius: 5
     //borderBottomLeftRadius: 5
   },
@@ -216,6 +218,11 @@ const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: colors.BLUE.default.secondary,
     height: 45
+  },
+  buttonTitleStyle: {
+    fontWeight: "700",
+    fontSize: width / 21,
+    width: "100%"
   },
   labelInput: {
     position: "absolute", 
@@ -237,9 +244,9 @@ const styles = StyleSheet.create({
     paddingRight: 15,
     paddingTop: 10, */
     //width: "100%"
-
-    marginVertical: 10,
-    flex: 0.5,
+    //marginVertical: width / 30,
+    //flex: 0.3,
+    borderRadius: 5,
 
   },
   //pwdInputContainer: {
@@ -260,8 +267,8 @@ const styles = StyleSheet.create({
     paddingBottom: 15 */
     borderWidth: 2,
     borderColor: colors.WHITE,
-    padding: 7,
-    borderRadius: 5
+    padding: height / 64,
+    
   },
  /*  pwdInputContainerStyle: {
     paddingBottom: 15,
@@ -283,13 +290,10 @@ const styles = StyleSheet.create({
     top: 12,
     backgroundColor: colors.WHITE
   },
-  buttonTitleStyle: {
-    fontWeight: "700",
-    width: "100%"
-  },
+ 
   forgotTitleStyle: {
     fontWeight: "700",
-    fontSize: 12,
+    fontSize: width / 25,
     width: "100%",
   },
   buttonContainerStyle: {
