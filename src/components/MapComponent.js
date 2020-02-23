@@ -18,12 +18,13 @@ export default class MapComponent extends Component {
                 showsUserLocation={true}
                 followUserLocation
                 loadingEnabled
-                showsMyLocationButton={true}
+                showsMyLocationButton={false}
                 style={[mapStyle,{ marginBottom: this.state.marginBottom }]}
                 region={mapRegion}
                 onRegionChange={onRegionChange}
                 onMapReady={() => this.setState({ marginBottom: 1 })}
             >
+                {this.props.children}
                 <Marker.Animated
                     ref={markerRef}
                     coordinate={{latitude: markerCord.droplatitude?markerCord.droplatitude:markerCord.wherelatitude, longitude: markerCord.droplongitude?markerCord.droplongitude:markerCord.wherelongitude}}

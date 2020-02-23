@@ -17,6 +17,7 @@ export const colors = {
   DARK: "#070807",
   DEEP_SKY:"#0370bc",
   LIGHT_RED:"#FF2121",
+  PRIMARY: "#C2185B",
 
   GREY: {
     default: '#243235',

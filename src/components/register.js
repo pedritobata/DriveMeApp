@@ -204,7 +204,7 @@ export default class Registration extends React.Component {
         return(
             <Background noBackImage={false}>
                 <Header 
-                    backgroundColor={colors.TRANSPARENT}
+                    //backgroundColor={colors.BLUE.default}
                     leftComponent={{icon:'ios-arrow-back', type:'ionicon', color:colors.WHITE, size: 35, component: TouchableWithoutFeedback,onPress: onPressBack }}
                     centerComponent={{text: languageJSON.registration_title, style:styles.headerStyle}}
                     containerStyle={styles.headerContainerStyle}  
@@ -468,7 +468,7 @@ const styles={
     headerContainerStyle: { 
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: colors.GREY.default, 
+        backgroundColor: colors.TRANSPARENT, 
         borderBottomWidth: 0 ,
         marginTop:0,
         paddingBottom: 10
