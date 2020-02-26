@@ -62,7 +62,8 @@ export default class MapScreen extends React.Component {
         longitude: 7.50064
       }),
       allRiders: [],
-      allcarTypes: []
+      allcarTypes: [],
+      destinationSelected: null,
     };
   }
 
@@ -735,6 +736,9 @@ export default class MapScreen extends React.Component {
           <Text style={styles.sampleTextStyle}>
             {languageJSON.cab_selection_subtitle}
           </Text>
+          
+          {this.state.destinationSelected ? 
+
           <ScrollView
             horizontal={true}
             style={styles.adjustViewStyle}
@@ -781,7 +785,7 @@ export default class MapScreen extends React.Component {
                 </TouchableOpacity>
               );
             })}
-          </ScrollView>
+          </ScrollView> : null}
           <View style={{ flex: 0.5 }}>
             <Button
               title={languageJSON.book_now_button}
@@ -800,12 +804,12 @@ export default class MapScreen extends React.Component {
               }}
               buttonStyle={{
                 width: width,
-                backgroundColor: colors.SKY,
+                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.GREY.Smoke_Grey,
                 elevation: 0
               }}
               containerStyle={{
                 flex: 1,
-                backgroundColor: colors.SKY
+                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.GREY.Smoke_Grey,
               }}
             />
           </View>

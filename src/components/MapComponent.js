@@ -18,7 +18,7 @@ export default class MapComponent extends Component {
                 showsUserLocation={true}
                 followUserLocation
                 loadingEnabled
-                showsMyLocationButton={false}
+                showsMyLocationButton={true}
                 style={[mapStyle,{ marginBottom: this.state.marginBottom }]}
                 region={mapRegion}
                 onRegionChange={onRegionChange}
