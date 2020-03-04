@@ -730,14 +730,14 @@ export default class MapScreen extends React.Component {
           />
         </View>
         <View style={styles.compViewStyle}>
-          <Text style={styles.pickCabStyle}>
-            {languageJSON.cab_selection_title}
-          </Text>
-          <Text style={styles.sampleTextStyle}>
-            {languageJSON.cab_selection_subtitle}
-          </Text>
-          
           {this.state.destinationSelected ? 
+          <View>
+            <Text style={styles.pickCabStyle}>
+              {languageJSON.cab_selection_title}
+            </Text>
+            <Text style={styles.sampleTextStyle}>
+              {languageJSON.cab_selection_subtitle}
+            </Text>
 
           <ScrollView
             horizontal={true}
@@ -785,8 +785,12 @@ export default class MapScreen extends React.Component {
                 </TouchableOpacity>
               );
             })}
-          </ScrollView> : null}
-          <View style={{ flex: 0.5 }}>
+          </ScrollView>  </View>: 
+          <View style={styles.noDestinationYet}>
+            <Text>Guarda</Text>
+          </View>
+          }
+          <View style={{ flex: 0 }}>
             <Button
               title={languageJSON.book_now_button}
               loading={false}
@@ -804,17 +808,16 @@ export default class MapScreen extends React.Component {
               }}
               buttonStyle={{
                 width: width,
-                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.GREY.Smoke_Grey,
+                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.BLUE.light,
                 elevation: 0
               }}
               containerStyle={{
-                flex: 1,
+                //flex: 0.5,
                 backgroundColor: this.state.destinationSelected ? colors.SKY : colors.GREY.Smoke_Grey,
               }}
             />
           </View>
         </View>
-
         {this.bonusModal()}
         {this.loading()}
       </View>
@@ -838,7 +841,7 @@ const styles = StyleSheet.create({
     marginRight: 10
   },
   mapcontainer: {
-    flex: 8,
+    flex: 9,
     width: width,
     justifyContent: "center",
     alignItems: "center"
@@ -884,7 +887,8 @@ const styles = StyleSheet.create({
 
   mainViewStyle: {
     flex: 1,
-    backgroundColor: colors.WHITE
+    backgroundColor: colors.WHITE,
+    //justifyContent: 'space-around'
     //marginTop: StatusBar.currentHeight
   },
   
@@ -927,7 +931,8 @@ const styles = StyleSheet.create({
 
   compViewStyle: {
     flex: 3.5,
-    alignItems: "center"
+    alignItems: "center",
+    //justifyContent: 'space-around'
   },
   pickCabStyle: {
     flex: 0.3,
@@ -948,6 +953,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     //justifyContent: 'space-around',
     marginTop: 8
+  },
+  noDestinationYet: {
+    flex: 1,
+
   },
   cabDivStyle: {
     flex: 1,
