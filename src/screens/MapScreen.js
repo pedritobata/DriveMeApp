@@ -16,6 +16,9 @@ import {
 import { MapComponent } from "../components";
 import { Icon, Button, Avatar, Header } from "react-native-elements";
 import { colors } from "../common/theme";
+//import AnimatedLoader from "react-native-animated-loader";
+
+import Spinner from 'react-native-spinkit';
 
 import * as Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -785,15 +788,22 @@ export default class MapScreen extends React.Component {
                 </TouchableOpacity>
               );
             })}
-          </ScrollView>  </View>: 
+          </ScrollView>  </View> : 
           <View style={styles.noDestinationYet}>
-            <Text>Guarda</Text>
+            <Text>Select a destination from the top box.</Text>
+            <Spinner
+              isVisible={true}
+              color="rgba(255,255,255,0.75)"
+              size={50}
+              type='ChasingDots'
+            />
           </View>
           }
           <View style={{ flex: 0 }}>
             <Button
               title={languageJSON.book_now_button}
               loading={false}
+              disabled={this.state.destinationSelected ? false : true}
               loadingProps={{
                 size: "large",
                 color: colors.BLUE.default.primary
@@ -808,12 +818,12 @@ export default class MapScreen extends React.Component {
               }}
               buttonStyle={{
                 width: width,
-                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.BLUE.light,
+                backgroundColor: colors.SKY ,
                 elevation: 0
               }}
               containerStyle={{
                 //flex: 0.5,
-                backgroundColor: this.state.destinationSelected ? colors.SKY : colors.GREY.Smoke_Grey,
+                backgroundColor: colors.SKY,
               }}
             />
           </View>
@@ -956,8 +966,14 @@ const styles = StyleSheet.create({
   },
   noDestinationYet: {
     flex: 1,
-
+    justifyContent: 'center',
+    alignItems: 'center'
   },
+  /* lottie: {
+    width: 80,
+    height: 80
+    //flex: 1
+  }, */  
   cabDivStyle: {
     flex: 1,
     width: width / 3,
