@@ -18,7 +18,9 @@ import { Icon, Button, Avatar, Header } from "react-native-elements";
 import { colors } from "../common/theme";
 //import AnimatedLoader from "react-native-animated-loader";
 
-import Spinner from 'react-native-spinkit';
+// import Spinner from 'react-native-spinkit';
+
+import LoadingDots from "react-native-loading-dots";
 
 import * as Constants from "expo-constants";
 import * as Location from "expo-location";
@@ -713,7 +715,11 @@ export default class MapScreen extends React.Component {
                   containerStyle={{ flex: 1 }}
                 />
                 <Text numberOfLines={1} style={styles.textStyle}>
-                <Text style={{color: colors.GREY.Deep_Nobel}}>To:      </Text>{this.state.dropText}
+                <Text style={{color: colors.GREY.Deep_Nobel}}>To:      </Text>
+                  <Text style={{backgroundColor: !this.state.destinationSelected ? colors.YELLOW.secondary
+                  : ''}}>
+                    {this.state.dropText}
+                  </Text>
                 </Text>
               </View>
             </TouchableOpacity>
@@ -790,13 +796,31 @@ export default class MapScreen extends React.Component {
             })}
           </ScrollView>  </View> : 
           <View style={styles.noDestinationYet}>
-            <Text>Select a destination from the top box.</Text>
-            <Spinner
-              isVisible={true}
-              color="rgba(255,255,255,0.75)"
-              size={50}
-              type='ChasingDots'
-            />
+            <View style={styles.selectDestinationCaptionContainer}>
+              {!this.state.destinationSelected ? 
+               <View style={styles.selectDestinationCaption}>
+                 <Icon
+                  name="alert-triangle"
+                  type="feather"
+                  color={colors.YELLOW.caution}
+                  size={width / 14}
+                  //iconStyle={{fontWeight: '800'}}
+                  containerStyle={{ flex: 0.5}}
+                /> 
+             <Text style={{flex: 0.5}}>Select a destination at the top search box!</Text></View>
+                  : <Text>Calculating fees and trip duration</Text>}
+            </View>
+            {this.state.destinationSelected ? 
+               <View style={styles.loadingDotsContainer}>
+               <LoadingDots 
+                 size={width / 28}
+                 dots={3}
+                 colors={['#4dabf7','#4dabf7','#4dabf7']}
+               />
+             </View> :
+             null
+            }
+           
           </View>
           }
           <View style={{ flex: 0 }}>
@@ -825,6 +849,8 @@ export default class MapScreen extends React.Component {
                 //flex: 0.5,
                 backgroundColor: colors.SKY,
               }}
+              disabledStyle={{backgroundColor: colors.BLUE.skyBlur}}
+              disabledTitleStyle={{color: colors.WHITE}}
             />
           </View>
         </View>
@@ -859,7 +885,7 @@ const styles = StyleSheet.create({
   searchStyle: {
     //flex: 1,
     //flexDirection: "row",
-    width: "90%" ,
+    width: "94%" ,
     //borderTopWidth: 0,
     //alignItems: 'stretch',
     //justifyContent: 'space-between',
@@ -969,6 +995,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
   },
+  selectDestinationCaptionContainer: {
+    flex: 0.6,
+    justifyContent: 'center',
+  },
+  selectDestinationCaption: {
+    //flexDirection: 'row',
+    justifyContent: 'space-evenly'
+  },
+  loadingDotsContainer: {
+    width: 40,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },  
   /* lottie: {
     width: 80,
     height: 80

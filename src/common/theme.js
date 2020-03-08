@@ -42,12 +42,14 @@ export const colors = {
     light: "#8ec4e6",
     dark: "#111b1e",
     sky: "#4a90e2",
+    skyBlur: "#8eb3d1",
     Deep_Blue:"#0386e1",
   },
   YELLOW: {
     primary: "#fda33b",
     secondary: "#ffe446",
-    light: "#dbd6a0"
+    light: "#dbd6a0",
+    caution: "#faea3c"
   },
   GREEN: {
     default: "green",
