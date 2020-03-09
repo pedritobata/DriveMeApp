@@ -69,6 +69,7 @@ export default class MapScreen extends React.Component {
       allRiders: [],
       allcarTypes: [],
       destinationSelected: null,
+      loading: true
     };
   }
 
@@ -280,6 +281,11 @@ export default class MapScreen extends React.Component {
                   lng: pos.longitude
                 });
             }
+            
+            this.setState({
+              loading: false
+            });
+
           })
           .catch(error => {
             console.error(error);
@@ -797,20 +803,21 @@ export default class MapScreen extends React.Component {
           </ScrollView>  </View> : 
           <View style={styles.noDestinationYet}>
             <View style={styles.selectDestinationCaptionContainer}>
-              {!this.state.destinationSelected ? 
+              {this.state.loading ? <Text style={{flex: 0.5}}>Finding your location</Text>
+               : (!this.state.destinationSelected ? 
                <View style={styles.selectDestinationCaption}>
                  <Icon
-                  name="alert-triangle"
+                  name="search"
                   type="feather"
-                  color={colors.YELLOW.caution}
+                  color={colors.YELLOW.secondary}
                   size={width / 14}
                   //iconStyle={{fontWeight: '800'}}
                   containerStyle={{ flex: 0.5}}
                 /> 
              <Text style={{flex: 0.5}}>Select a destination at the top search box!</Text></View>
-                  : <Text>Calculating fees and trip duration</Text>}
+                  : <Text>Calculating fees and trip duration</Text>)}
             </View>
-            {this.state.destinationSelected ? 
+            {this.state.destinationSelected || this.state.loading ? 
                <View style={styles.loadingDotsContainer}>
                <LoadingDots 
                  size={width / 28}
