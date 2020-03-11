@@ -34,6 +34,7 @@ export const colors = {
     border:"#d6d6d6",
     Deep_Nobel:"#9f9f9f",
     whiteish:"#E5E3E3",
+    light: '#f7f7f7'
   },
   BLUE: {
     default: "blue",

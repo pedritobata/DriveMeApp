@@ -11,7 +11,11 @@ import {
   Platform,
   Alert,
   Modal,
-  ScrollView
+  ScrollView,
+  TextInput,
+  FlatList,
+  TouchableHighlight,
+  KeyboardAvoidingView
 } from "react-native";
 import { MapComponent } from "../components";
 import { Icon, Button, Avatar, Header } from "react-native-elements";
@@ -32,12 +36,16 @@ import { AnimatedRegion } from "react-native-maps";
 import { google_map_key } from "../common/key";
 import languageJSON from "../common/language";
 import { Currency } from "../common/CurrencySymbol";
+import _ from 'lodash';
+import Background from '../components/Background';
+
+
 export default class MapScreen extends React.Component {
   allCars = [];
   passData = {
     droplatitude: 0,
     droplongitude: 0,
-    droptext: "",
+    droptext: languageJSON.map_screen_where_input_text,
     whereText: "",
     wherelatitude: 0,
     wherelongitude: 0,
@@ -58,8 +66,8 @@ export default class MapScreen extends React.Component {
         latitudeDelta: 0.9922,
         longitudeDelta: 0.9421
       },
-      whereText: languageJSON.map_screen_where_input_text,
-      dropText: languageJSON.map_screen_drop_input_text,
+      whereText: '',
+      dropText: '',
       backgroundColor: colors.WHITE,
       carType: "",
       coordinate: new AnimatedRegion({
@@ -69,8 +77,12 @@ export default class MapScreen extends React.Component {
       allRiders: [],
       allcarTypes: [],
       destinationSelected: null,
-      loading: true
+      loading: true,
+      predictionsDestination: [],
     };
+
+    //this.onChangeSearchBox = this.onChangeSearchBox.bind(this);
+    this.onChangeSearchBoxDebounced = _.debounce(this.onChangeSearchBox, 500);
   }
 
   allCarsData() {
@@ -646,6 +658,26 @@ export default class MapScreen extends React.Component {
     });
   }
 
+  async onChangeSearchBox(inputAddress){
+    this.forceUpdate();
+    const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${google_map_key}&input=${inputAddress}`);
+    const respData = await response.json();
+    console.log('response:', respData);
+    if(respData.status === 'OK' || respData.status === 'INVALID_REQUEST'){
+      //console.log('response:', respData.predictions[0]);
+      this.setState({
+        predictionsDestination: respData.predictions
+      });
+    }else if(respData.status === 'ZERO_RESULTS'){
+      this.setState({
+        predictionsDestination: [{description: 'No results found.'}]
+      });
+    }
+    
+  }
+
+
+
   render() {
     var nearbyMarkers = this.state.nearby || [];
     return (
@@ -701,15 +733,16 @@ export default class MapScreen extends React.Component {
                 </Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity
-              onPress={() => {
+            <View
+              /* onPress={() => {
                 this.props.navigation.navigate("Search", {
                   from: "drop",
                   whereText: this.state.whereText,
                   dropText: this.state.dropText,
                   old: this.passData
                 });
-              }}
+              }} */
+              //onPress={this.onChangeSearchBox}
               style={styles.searchClickStyle}
             >
               <View style={styles.textIconStyle}>
@@ -720,15 +753,40 @@ export default class MapScreen extends React.Component {
                   size={23}
                   containerStyle={{ flex: 1 }}
                 />
-                <Text numberOfLines={1} style={styles.textStyle}>
-                <Text style={{color: colors.GREY.Deep_Nobel}}>To:      </Text>
-                  <Text style={{backgroundColor: !this.state.destinationSelected ? colors.YELLOW.secondary
-                  : ''}}>
-                    {this.state.dropText}
-                  </Text>
-                </Text>
+                
+                <View numberOfLines={1} style={styles.textStyle}>
+                  <Text style={{color: colors.GREY.Deep_Nobel}}>To:      </Text>
+                  <TextInput 
+                  /* style={{backgroundColor: !this.state.destinationSelected ? colors.YELLOW.secondary : ''}} */
+                  placeholder='Drop where?'
+                  //autoFocus={this.state.loading}
+                  onChangeText={(address) => this.onChangeSearchBoxDebounced(address)}
+                  >
+                    {this.state.dropText} 
+                  </TextInput>
+                </View>
               </View>
-            </TouchableOpacity>
+            </View>
+            {/* guardia */}
+            {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}> */}
+              <FlatList
+                      ItemSeparatorComponent={({highlighted})=>
+                        <View style={[styles.separator,highlighted && {marginLeft: 0}]} />
+                      }
+                      data={this.state.predictionsDestination}
+                      renderItem={({item, index, separators}) => (
+                        <TouchableHighlight
+                          key={item.id}
+                          onPress={() => this._onPress(item)}
+                          onShowUnderlay={separators.highlight}
+                          onHideUnderlay={separators.unhighlight}>
+                          <View style={styles.searchItem}>
+                            <Text>{item.description}</Text>
+                          </View>
+                        </TouchableHighlight>
+                      )}
+                />
+            {/* </KeyboardAvoidingView> */}
             {/* </View> */}
           </View>
 
@@ -908,6 +966,15 @@ const styles = StyleSheet.create({
     zIndex: 10,
    // padding: 10,
   },
+  separator: {
+    //padding: 10
+  },
+  searchItem: {
+    borderBottomWidth: 1,
+    paddingVertical: 8,
+    backgroundColor: colors.GREY.light,
+    paddingHorizontal: 5
+  },
   textIconStyle: {
     flex: 1,
     justifyContent: "center",
@@ -917,6 +984,7 @@ const styles = StyleSheet.create({
   },
   textStyle: {
     flex: 9,
+    flexDirection: 'row',
     fontFamily: "Roboto-Regular",
     fontSize: 14,
     fontWeight: "400",
