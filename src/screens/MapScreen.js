@@ -78,7 +78,7 @@ export default class MapScreen extends React.Component {
       allcarTypes: [],
       destinationSelected: null,
       loading: true,
-      predictionsDestination: [],
+      predictionsDestination: null,
     };
 
     //this.onChangeSearchBox = this.onChangeSearchBox.bind(this);
@@ -248,7 +248,7 @@ export default class MapScreen extends React.Component {
         )
           .then(response => response.json())
           .then(responseJson => {
-            //console.log("****respuesta:", responseJson);
+            console.log("****respuesta:", responseJson.results[0]);
             if (this.passData.wherelatitude == 0) {
               this.setState(
                 {
@@ -662,7 +662,7 @@ export default class MapScreen extends React.Component {
     this.forceUpdate();
     const response = await fetch(`https://maps.googleapis.com/maps/api/place/autocomplete/json?key=${google_map_key}&input=${inputAddress}`);
     const respData = await response.json();
-    console.log('response:', respData);
+    //console.log('response:', respData);
     if(respData.status === 'OK' || respData.status === 'INVALID_REQUEST'){
       //console.log('response:', respData.predictions[0]);
       this.setState({
@@ -677,251 +677,279 @@ export default class MapScreen extends React.Component {
   }
 
 
+  onBlurSearchResults = event => {
+    if(this.state.predictionsDestination){
+      //console.log("***onBlurSearchResults");
+      this.setState({
+        predictionsDestination: null
+      });
+    }
+    
+  }
+
+
 
   render() {
     var nearbyMarkers = this.state.nearby || [];
     return (
-      <View style={styles.mainViewStyle}>
-        <Header
-          backgroundColor={colors.GREY.default}
-          leftComponent={{
-            icon: "md-menu",
-            type: "ionicon",
-            color: colors.SKY,
-            size: 30,
-            component: TouchableWithoutFeedback,
-            onPress: () => {
-              this.props.navigation.toggleDrawer();
+      <TouchableWithoutFeedback onPress={this.onBlurSearchResults}>
+        <View style={styles.mainViewStyle}>
+          <Header
+            backgroundColor={colors.GREY.default}
+            leftComponent={{
+              icon: "md-menu",
+              type: "ionicon",
+              color: colors.SKY,
+              size: 30,
+              component: TouchableWithoutFeedback,
+              onPress: () => {
+                this.props.navigation.toggleDrawer();
+              }
+            }}
+            centerComponent={
+              <Text style={styles.headerTitleStyle}>
+                {languageJSON.map_screen_title}
+              </Text>
             }
-          }}
-          centerComponent={
-            <Text style={styles.headerTitleStyle}>
-              {languageJSON.map_screen_title}
-            </Text>
-          }
-          containerStyle={styles.headerStyle}
-          innerContainerStyles={styles.inrContStyle}
-        />
-        <View style={styles.mapcontainer}>
-          <View style={styles.searchStyle}>
-            {/* <View style={styles.coverViewStyle}>
-                    <View style={styles.viewStyle1}/>
-                    <View style={styles.viewStyle2}/>
-                    <View style={styles.viewStyle3}/>
-                </View> */}
-            {/* <View style={styles.iconsViewStyle}> */}
-            <TouchableOpacity
-              onPress={() => {
-                this.props.navigation.navigate("Search", {
-                  from: "where",
-                  whereText: this.state.whereText,
-                  dropText: this.state.dropText,
-                  old: this.passData
-                });
-              }}
-              style={styles.contentStyle}
-            >
-              <View style={styles.textIconStyle}>
-                <Icon
-                  name="gps-fixed"
-                  color={colors.BLACK}
-                  size={23}
-                  containerStyle={{ flex: 1 }}
-                />
-                <Text numberOfLines={1} style={styles.textStyle}>
-                  <Text style={{color: colors.GREY.Deep_Nobel}}>From: </Text>{this.state.whereText}
-                </Text>
-              </View>
-            </TouchableOpacity>
-            <View
-              /* onPress={() => {
-                this.props.navigation.navigate("Search", {
-                  from: "drop",
-                  whereText: this.state.whereText,
-                  dropText: this.state.dropText,
-                  old: this.passData
-                });
-              }} */
-              //onPress={this.onChangeSearchBox}
-              style={styles.searchClickStyle}
-            >
-              <View style={styles.textIconStyle}>
-                <Icon
-                  name="search"
-                  type="feather"
-                  color={colors.BLACK}
-                  size={23}
-                  containerStyle={{ flex: 1 }}
-                />
-                
-                <View numberOfLines={1} style={styles.textStyle}>
-                  <Text style={{color: colors.GREY.Deep_Nobel}}>To:      </Text>
-                  <TextInput 
-                  /* style={{backgroundColor: !this.state.destinationSelected ? colors.YELLOW.secondary : ''}} */
-                  placeholder='Drop where?'
-                  //autoFocus={this.state.loading}
-                  onChangeText={(address) => this.onChangeSearchBoxDebounced(address)}
-                  >
-                    {this.state.dropText} 
-                  </TextInput>
+            containerStyle={styles.headerStyle}
+            innerContainerStyles={styles.inrContStyle}
+          />
+          <View style={styles.mapcontainer}>
+            <View style={styles.searchStyle}>
+              {/* <View style={styles.coverViewStyle}>
+                      <View style={styles.viewStyle1}/>
+                      <View style={styles.viewStyle2}/>
+                      <View style={styles.viewStyle3}/>
+                  </View> */}
+              {/* <View style={styles.iconsViewStyle}> */}
+              <View
+               /*  onPress={() => {
+                  this.props.navigation.navigate("Search", {
+                    from: "where",
+                    whereText: this.state.whereText,
+                    dropText: this.state.dropText,
+                    old: this.passData
+                  });
+                }} */
+                style={styles.contentStyle}
+              >
+                <View style={styles.textIconStyle}>
+                  <Icon
+                    name="gps-fixed"
+                    color={colors.BLACK}
+                    size={23}
+                    containerStyle={{ flex: 1 }}
+                  />
+                 {/*  <Text numberOfLines={1} style={styles.textStyle}>
+                    <Text style={{color: colors.GREY.Deep_Nobel}}>From: </Text>{this.state.whereText}
+                  </Text> */}
+                  <View style={styles.textStyle}>
+                    <Text style={{color: colors.GREY.Deep_Nobel}}>From:  </Text>
+                    <TextInput 
+                    style={{flex: 1}}
+                    //multiline={true}
+                    //maxLength={this.state.whereText.length}
+                    placeholder="I'm here"
+                    //autoFocus={this.state.loading}
+                    onChangeText={(address) => this.onChangeSearchBoxDebounced(address)}
+                    >
+                      {this.state.whereText} 
+                    </TextInput>
+                  </View>
                 </View>
               </View>
+              <View
+                /* onPress={() => {
+                  this.props.navigation.navigate("Search", {
+                    from: "drop",
+                    whereText: this.state.whereText,
+                    dropText: this.state.dropText,
+                    old: this.passData
+                  });
+                }} */
+                //onPress={this.onChangeSearchBox}
+                style={styles.searchClickStyle}
+              >
+                <View style={styles.textIconStyle}>
+                  <Icon
+                    name="search"
+                    type="feather"
+                    color={colors.BLACK}
+                    size={23}
+                    containerStyle={{ flex: 1 }}
+                  />
+                  
+                  <View style={styles.textStyle}>
+                    <Text style={{color: colors.GREY.Deep_Nobel}}>To:       </Text>
+                    <TextInput 
+                    style={{flex: 1}}
+                    /* style={{backgroundColor: !this.state.destinationSelected ? colors.YELLOW.secondary : ''}} */
+                    placeholder='Drop where?'
+                    //autoFocus={this.state.loading}
+                    onChangeText={(address) => this.onChangeSearchBoxDebounced(address)}
+                    >
+                      {this.state.dropText} 
+                    </TextInput>
+                  </View>
+                </View>
+              </View>
+              {/* guardia */}
+              {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}> */}
+                <FlatList
+                        ItemSeparatorComponent={({highlighted})=>
+                          <View style={[styles.separator,highlighted && {marginLeft: 0}]} />
+                        }
+                        data={this.state.predictionsDestination}
+                        renderItem={({item, index, separators}) => (
+                          <TouchableHighlight
+                            key={item.id}
+                            onPress={() => this._onPress(item)}
+                            onShowUnderlay={separators.highlight}
+                            onHideUnderlay={separators.unhighlight}>
+                            <View style={styles.searchItem}>
+                              <Text>{item.description}</Text>
+                            </View>
+                          </TouchableHighlight>
+                        )}
+                  />
+              {/* </KeyboardAvoidingView> */}
+              {/* </View> */}
             </View>
-            {/* guardia */}
-            {/* <KeyboardAvoidingView behavior='position' keyboardVerticalOffset={30}> */}
-              <FlatList
-                      ItemSeparatorComponent={({highlighted})=>
-                        <View style={[styles.separator,highlighted && {marginLeft: 0}]} />
-                      }
-                      data={this.state.predictionsDestination}
-                      renderItem={({item, index, separators}) => (
-                        <TouchableHighlight
-                          key={item.id}
-                          onPress={() => this._onPress(item)}
-                          onShowUnderlay={separators.highlight}
-                          onHideUnderlay={separators.unhighlight}>
-                          <View style={styles.searchItem}>
-                            <Text>{item.description}</Text>
-                          </View>
-                        </TouchableHighlight>
-                      )}
-                />
-            {/* </KeyboardAvoidingView> */}
-            {/* </View> */}
+  
+              <MapComponent
+                onTapMap={this.onBlurSearchResults}
+                markerRef={marker => {
+                  this.marker = marker;
+                }}
+                mapStyle={styles.map}
+                mapRegion={this.state.region}
+                /* onRegionChange={(region)=>{this.setState({region: region})}} */ nearby={
+                  nearbyMarkers
+                }
+                markerCord={this.passData}
+              />
           </View>
-
-          <MapComponent
-            markerRef={marker => {
-              this.marker = marker;
-            }}
-            mapStyle={styles.map}
-            mapRegion={this.state.region}
-            /* onRegionChange={(region)=>{this.setState({region: region})}} */ nearby={
-              nearbyMarkers
-            }
-            markerCord={this.passData}
-          />
-        </View>
-        <View style={styles.compViewStyle}>
-          {this.state.destinationSelected ? 
-          <View>
-            <Text style={styles.pickCabStyle}>
-              {languageJSON.cab_selection_title}
-            </Text>
-            <Text style={styles.sampleTextStyle}>
-              {languageJSON.cab_selection_subtitle}
-            </Text>
-
-          <ScrollView
-            horizontal={true}
-            style={styles.adjustViewStyle}
-            showsHorizontalScrollIndicator={false}
-          >
-            {this.state.allcarTypes.map((prop, key) => {
-              return (
-                <TouchableOpacity
-                  key={key}
-                  style={styles.cabDivStyle}
-                  onPress={() => {
-                    this.selectCarType(prop, key);
-                  }}
-                  disabled={prop.minTime == ""}
-                >
-                  <View
-                    style={[
-                      styles.imageStyle,
-                      {
-                        backgroundColor:
-                          prop.active == true
-                            ? colors.YELLOW.secondary
-                            : colors.WHITE
-                      }
-                    ]}
+          <View style={styles.compViewStyle}>
+            {this.state.destinationSelected ? 
+            <View>
+              <Text style={styles.pickCabStyle}>
+                {languageJSON.cab_selection_title}
+              </Text>
+              <Text style={styles.sampleTextStyle}>
+                {languageJSON.cab_selection_subtitle}
+              </Text>
+  
+            <ScrollView
+              horizontal={true}
+              style={styles.adjustViewStyle}
+              showsHorizontalScrollIndicator={false}
+            >
+              {this.state.allcarTypes.map((prop, key) => {
+                return (
+                  <TouchableOpacity
+                    key={key}
+                    style={styles.cabDivStyle}
+                    onPress={() => {
+                      this.selectCarType(prop, key);
+                    }}
+                    disabled={prop.minTime == ""}
                   >
-                    <Image
-                      source={
-                        prop.image
-                          ? { uri: prop.image }
-                          : require("../../assets/images/microBlackCar.png")
-                      }
-                      style={styles.imageStyle1}
-                    />
-                  </View>
-                  <View style={styles.textViewStyle}>
-                    <Text style={styles.text1}>{prop.name.toUpperCase()}</Text>
-                    <Text style={styles.text2}>
-                      {prop.minTime != ""
-                        ? prop.minTime
-                        : languageJSON.not_available}
-                    </Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            })}
-          </ScrollView>  </View> : 
-          <View style={styles.noDestinationYet}>
-            <View style={styles.selectDestinationCaptionContainer}>
-              {this.state.loading ? <Text style={{flex: 0.5}}>Finding your location</Text>
-               : (!this.state.destinationSelected ? 
-               <View style={styles.selectDestinationCaption}>
-                 <Icon
-                  name="search"
-                  type="feather"
-                  color={colors.YELLOW.secondary}
-                  size={width / 14}
-                  //iconStyle={{fontWeight: '800'}}
-                  containerStyle={{ flex: 0.5}}
-                /> 
-             <Text style={{flex: 0.5}}>Select a destination at the top search box!</Text></View>
-                  : <Text>Calculating fees and trip duration</Text>)}
+                    <View
+                      style={[
+                        styles.imageStyle,
+                        {
+                          backgroundColor:
+                            prop.active == true
+                              ? colors.YELLOW.secondary
+                              : colors.WHITE
+                        }
+                      ]}
+                    >
+                      <Image
+                        source={
+                          prop.image
+                            ? { uri: prop.image }
+                            : require("../../assets/images/microBlackCar.png")
+                        }
+                        style={styles.imageStyle1}
+                      />
+                    </View>
+                    <View style={styles.textViewStyle}>
+                      <Text style={styles.text1}>{prop.name.toUpperCase()}</Text>
+                      <Text style={styles.text2}>
+                        {prop.minTime != ""
+                          ? prop.minTime
+                          : languageJSON.not_available}
+                      </Text>
+                    </View>
+                  </TouchableOpacity>
+                );
+              })}
+            </ScrollView>  </View> : 
+            <View style={styles.noDestinationYet}>
+              <View style={styles.selectDestinationCaptionContainer}>
+                {this.state.loading ? <Text style={{flex: 0.5}}>Finding your location</Text>
+                 : (!this.state.destinationSelected ? 
+                 <View style={styles.selectDestinationCaption}>
+                   <Icon
+                    name="search"
+                    type="feather"
+                    color={colors.YELLOW.secondary}
+                    size={width / 14}
+                    //iconStyle={{fontWeight: '800'}}
+                    containerStyle={{ flex: 0.5}}
+                  /> 
+               <Text style={{flex: 0.5}}>Select a location or a destination at the top search box!</Text></View>
+                    : <Text>Calculating fees and trip duration</Text>)}
+              </View>
+              {this.state.destinationSelected || this.state.loading ? 
+                 <View style={styles.loadingDotsContainer}>
+                 <LoadingDots 
+                   size={width / 28}
+                   dots={3}
+                   colors={['#4dabf7','#4dabf7','#4dabf7']}
+                 />
+               </View> :
+               null
+              }
+             
             </View>
-            {this.state.destinationSelected || this.state.loading ? 
-               <View style={styles.loadingDotsContainer}>
-               <LoadingDots 
-                 size={width / 28}
-                 dots={3}
-                 colors={['#4dabf7','#4dabf7','#4dabf7']}
-               />
-             </View> :
-             null
             }
-           
+            <View style={{ flex: 0 }}>
+              <Button
+                title={languageJSON.book_now_button}
+                loading={false}
+                disabled={this.state.destinationSelected ? false : true}
+                loadingProps={{
+                  size: "large",
+                  color: colors.BLUE.default.primary
+                }}
+                titleStyle={{
+                  color: colors.WHITE,
+                  fontFamily: "Roboto-Bold",
+                  fontSize: 18
+                }}
+                onPress={() => {
+                  this.onPressBook();
+                }}
+                buttonStyle={{
+                  width: width,
+                  backgroundColor: colors.SKY ,
+                  elevation: 0
+                }}
+                containerStyle={{
+                  //flex: 0.5,
+                  backgroundColor: colors.SKY,
+                }}
+                disabledStyle={{backgroundColor: colors.BLUE.skyBlur}}
+                disabledTitleStyle={{color: colors.WHITE}}
+              />
+            </View>
           </View>
-          }
-          <View style={{ flex: 0 }}>
-            <Button
-              title={languageJSON.book_now_button}
-              loading={false}
-              disabled={this.state.destinationSelected ? false : true}
-              loadingProps={{
-                size: "large",
-                color: colors.BLUE.default.primary
-              }}
-              titleStyle={{
-                color: colors.WHITE,
-                fontFamily: "Roboto-Bold",
-                fontSize: 18
-              }}
-              onPress={() => {
-                this.onPressBook();
-              }}
-              buttonStyle={{
-                width: width,
-                backgroundColor: colors.SKY ,
-                elevation: 0
-              }}
-              containerStyle={{
-                //flex: 0.5,
-                backgroundColor: colors.SKY,
-              }}
-              disabledStyle={{backgroundColor: colors.BLUE.skyBlur}}
-              disabledTitleStyle={{color: colors.WHITE}}
-            />
-          </View>
+          {this.bonusModal()}
+          {this.loading()}
         </View>
-        {this.bonusModal()}
-        {this.loading()}
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
@@ -971,7 +999,8 @@ const styles = StyleSheet.create({
   },
   searchItem: {
     borderBottomWidth: 1,
-    paddingVertical: 8,
+    borderBottomColor: colors.RED,
+    paddingVertical: 12,
     backgroundColor: colors.GREY.light,
     paddingHorizontal: 5
   },
@@ -985,6 +1014,7 @@ const styles = StyleSheet.create({
   textStyle: {
     flex: 9,
     flexDirection: 'row',
+    alignItems: 'center',
     fontFamily: "Roboto-Regular",
     fontSize: 14,
     fontWeight: "400",

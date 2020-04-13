@@ -14,6 +14,7 @@ export default class MapComponent extends Component {
     const { mapRegion, markerCord, mapStyle,nearby, onRegionChange, markerRef } = this.props;
         return (
             <MapView
+                onPress={this.props.onTapMap}
                 provider={PROVIDER_GOOGLE}
                 showsUserLocation={true}
                 followUserLocation
